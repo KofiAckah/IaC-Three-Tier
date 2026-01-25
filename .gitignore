@@ -1,0 +1,12 @@
+# Terraform Files
+# ===============
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files - contain sensitive infrastructure state
+*.tfstate
+*.tfstate.*
+
+*.tfvars
+assignment.md

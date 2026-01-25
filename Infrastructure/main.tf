@@ -21,3 +21,28 @@ module "network" {
     }
   )
 }
+
+# Security Module
+module "security" {
+  source = "./modules/security"
+
+  # Pass required variables
+  vpc_id       = module.network.vpc_id
+  vpc_cidr     = module.network.vpc_cidr
+  project_name = var.project_name
+  environment  = var.environment
+
+  # Merge common tags
+  tags = merge(
+    var.common_tags,
+    {
+      Module      = "Security"
+      Project     = var.project_name
+      Environment = var.environment
+      Owner       = var.owner
+    }
+  )
+
+  # Ensure network is created first
+  depends_on = [module.network]
+}

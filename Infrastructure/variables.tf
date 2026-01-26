@@ -39,3 +39,55 @@ variable "vpc_cidr" {
   type        = string
   default     = "10.0.0.0/16"
 }
+
+# ==================== ALB Variables ====================
+
+variable "target_port" {
+  description = "Port on which targets receive traffic from ALB"
+  type        = number
+  default     = 80
+}
+
+variable "enable_deletion_protection" {
+  description = "Enable deletion protection on the ALB"
+  type        = bool
+  default     = false
+}
+
+variable "enable_stickiness" {
+  description = "Enable session stickiness on ALB"
+  type        = bool
+  default     = false
+}
+
+# ==================== Health Check Variables ====================
+
+variable "health_check_path" {
+  description = "Path for ALB health check endpoint (Todo App: /api/health)"
+  type        = string
+  default     = "/api/health"
+}
+
+variable "health_check_interval" {
+  description = "Interval between health checks in seconds"
+  type        = number
+  default     = 30
+}
+
+variable "health_check_timeout" {
+  description = "Timeout for health check in seconds"
+  type        = number
+  default     = 5
+}
+
+variable "health_check_healthy_threshold" {
+  description = "Number of consecutive successful health checks required"
+  type        = number
+  default     = 2
+}
+
+variable "health_check_unhealthy_threshold" {
+  description = "Number of consecutive failed health checks required"
+  type        = number
+  default     = 2
+}

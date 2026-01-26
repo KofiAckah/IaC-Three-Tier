@@ -93,3 +93,42 @@ output "db_security_group_name" {
   description = "Name of the DB security group"
   value       = module.security.db_sg_name
 }
+
+# ============================================
+# ALB Module Outputs
+# ============================================
+
+output "alb_dns_name" {
+  description = "DNS name of the Application Load Balancer"
+  value       = module.alb.alb_dns_name
+}
+
+output "alb_url" {
+  description = "URL to access the application via ALB"
+  value       = module.alb.alb_url
+}
+
+output "alb_arn" {
+  description = "ARN of the Application Load Balancer"
+  value       = module.alb.alb_arn
+}
+
+output "alb_zone_id" {
+  description = "Zone ID of the Application Load Balancer"
+  value       = module.alb.alb_zone_id
+}
+
+output "target_group_arn" {
+  description = "ARN of the ALB target group"
+  value       = module.alb.target_group_arn
+}
+
+output "target_group_name" {
+  description = "Name of the ALB target group"
+  value       = module.alb.target_group_name
+}
+
+output "health_check_path" {
+  description = "Health check path configured for ALB target group"
+  value       = module.alb.health_check_path
+}

@@ -123,7 +123,7 @@ resource "aws_vpc_security_group_ingress_rule" "app_https" {
   to_port                      = 443
   description                  = "HTTPS from ALB"
 
-  tags = merge( 
+  tags = merge(
     {
       Name = "${var.project_name}-${var.environment}-app-https-rule"
     }
@@ -198,7 +198,7 @@ resource "aws_security_group" "db_sg" {
   description = "Security group for RDS database"
   vpc_id      = var.vpc_id
 
-  tags = merge( 
+  tags = merge(
     var.tags,
     {
       Name = "${var.project_name}-${var.environment}-db-sg"
@@ -246,7 +246,7 @@ resource "aws_vpc_security_group_egress_rule" "db_all" {
   ip_protocol       = "-1"
   description       = "Allow all outbound traffic"
 
-  tags = merge( 
+  tags = merge(
     {
       Name = "${var.project_name}-${var.environment}-db-egress-rule"
     }

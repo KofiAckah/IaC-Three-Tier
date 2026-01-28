@@ -11,10 +11,10 @@ resource "aws_lb" "app_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.web_sg_id]
-  subnets           = var.public_subnet_ids
+  subnets            = var.public_subnet_ids
 
-  enable_deletion_protection = var.enable_deletion_protection
-  enable_http2              = true
+  enable_deletion_protection       = var.enable_deletion_protection
+  enable_http2                     = true
   enable_cross_zone_load_balancing = true
 
   tags = merge(
@@ -39,9 +39,9 @@ resource "aws_lb_target_group" "app_tg" {
     unhealthy_threshold = var.health_check_unhealthy_threshold
     timeout             = var.health_check_timeout
     interval            = var.health_check_interval
-    path                = var.health_check_path  # /api/health for Todo App
+    path                = var.health_check_path # /api/health for Todo App
     protocol            = "HTTP"
-    matcher             = "200"  # Success status code
+    matcher             = "200" # Success status code
   }
 
   # Deregistration delay
@@ -50,7 +50,7 @@ resource "aws_lb_target_group" "app_tg" {
   # Stickiness (optional)
   stickiness {
     type            = "lb_cookie"
-    cookie_duration = 86400  # 1 day
+    cookie_duration = 86400 # 1 day
     enabled         = var.enable_stickiness
   }
 

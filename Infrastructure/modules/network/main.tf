@@ -147,7 +147,7 @@ resource "aws_route_table" "private_app" {
     nat_gateway_id = aws_nat_gateway.nat.id
   }
 
-  tags = merge(    
+  tags = merge(
     var.tags,
     {
       Name = "${var.project_name}-${var.environment}-private-app-rt"

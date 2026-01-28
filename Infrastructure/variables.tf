@@ -91,3 +91,65 @@ variable "health_check_unhealthy_threshold" {
   type        = number
   default     = 2
 }
+
+# ==================== Compute/ASG Variables ====================
+
+variable "instance_type" {
+  description = "EC2 instance type for application servers"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "key_name" {
+  description = "SSH key pair name for EC2 instances"
+  type        = string
+  default     = ""
+}
+
+variable "desired_capacity" {
+  description = "Desired number of instances in Auto Scaling Group"
+  type        = number
+  default     = 2
+}
+
+variable "min_size" {
+  description = "Minimum number of instances in Auto Scaling Group"
+  type        = number
+  default     = 1
+}
+
+variable "max_size" {
+  description = "Maximum number of instances in Auto Scaling Group"
+  type        = number
+  default     = 4
+}
+
+variable "health_check_type" {
+  description = "Type of health check for ASG (EC2 or ELB)"
+  type        = string
+  default     = "ELB"
+}
+
+variable "health_check_grace_period" {
+  description = "Time in seconds after instance launch before health checks start"
+  type        = number
+  default     = 300
+}
+
+variable "enable_monitoring" {
+  description = "Enable detailed monitoring for EC2 instances"
+  type        = bool
+  default     = false
+}
+
+variable "volume_size" {
+  description = "Size of EBS volume in GB"
+  type        = number
+  default     = 20
+}
+
+variable "volume_type" {
+  description = "Type of EBS volume (gp2, gp3, io1, etc.)"
+  type        = string
+  default     = "gp3"
+}

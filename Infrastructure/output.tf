@@ -51,8 +51,13 @@ output "internet_gateway_id" {
 }
 
 output "nat_gateway_id" {
-  description = "ID of the NAT Gateway"
+  description = "IDs of the NAT Gateways"
   value       = module.network.nat_gateway_id
+}
+
+output "nat_gateway_ips" {
+  description = "Elastic IPs of the NAT Gateways"
+  value       = module.network.nat_gateway_ips
 }
 
 output "availability_zones" {

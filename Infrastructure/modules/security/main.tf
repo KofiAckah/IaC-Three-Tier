@@ -114,7 +114,7 @@ resource "aws_vpc_security_group_ingress_rule" "app_http" {
   )
 }
 
-#  App - Allow HTTPS from Web SG (ALB)
+# App - Allow HTTPS from Web SG (ALB)
 resource "aws_vpc_security_group_ingress_rule" "app_https" {
   security_group_id            = aws_security_group.app_sg.id
   referenced_security_group_id = aws_security_group.web_sg.id
@@ -126,6 +126,38 @@ resource "aws_vpc_security_group_ingress_rule" "app_https" {
   tags = merge(
     {
       Name = "${var.project_name}-${var.environment}-app-https-rule"
+    }
+  )
+}
+
+# App - Allow ICMP from Web SG (for health checks and ping tests)
+resource "aws_vpc_security_group_ingress_rule" "app_icmp_web" {
+  security_group_id            = aws_security_group.app_sg.id
+  referenced_security_group_id = aws_security_group.web_sg.id
+  from_port                    = -1
+  ip_protocol                  = "icmp"
+  to_port                      = -1
+  description                  = "ICMP from Web SG for ping tests"
+
+  tags = merge(
+    {
+      Name = "${var.project_name}-${var.environment}-app-icmp-web-rule"
+    }
+  )
+}
+
+# App - Allow ICMP from VPC (for internal diagnostics)
+resource "aws_vpc_security_group_ingress_rule" "app_icmp_vpc" {
+  security_group_id = aws_security_group.app_sg.id
+  cidr_ipv4         = var.vpc_cidr
+  from_port         = -1
+  ip_protocol       = "icmp"
+  to_port           = -1
+  description       = "ICMP from VPC for internal diagnostics"
+
+  tags = merge(
+    {
+      Name = "${var.project_name}-${var.environment}-app-icmp-vpc-rule"
     }
   )
 }
@@ -142,38 +174,6 @@ resource "aws_vpc_security_group_ingress_rule" "app_ssh" {
   tags = merge(
     {
       Name = "${var.project_name}-${var.environment}-app-ssh-rule"
-    }
-  )
-}
-
-# App - Allow ICMP from Web SG
-resource "aws_vpc_security_group_ingress_rule" "app_icmp_web" {
-  security_group_id            = aws_security_group.app_sg.id
-  referenced_security_group_id = aws_security_group.web_sg.id
-  from_port                    = -1
-  ip_protocol                  = "icmp"
-  to_port                      = -1
-  description                  = "ICMP from Web tier"
-
-  tags = merge(
-    {
-      Name = "${var.project_name}-${var.environment}-app-icmp-web-rule"
-    }
-  )
-}
-
-# App - Allow ICMP from VPC
-resource "aws_vpc_security_group_ingress_rule" "app_icmp_vpc" {
-  security_group_id = aws_security_group.app_sg.id
-  cidr_ipv4         = var.vpc_cidr
-  from_port         = -1
-  ip_protocol       = "icmp"
-  to_port           = -1
-  description       = "ICMP from VPC"
-
-  tags = merge(
-    {
-      Name = "${var.project_name}-${var.environment}-app-icmp-vpc-rule"
     }
   )
 }

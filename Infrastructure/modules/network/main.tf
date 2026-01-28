@@ -93,28 +93,30 @@ resource "aws_internet_gateway" "igw" {
   )
 }
 
-# Elastic IP for NAT Gateway
+# Elastic IPs for NAT Gateways (one per AZ)
 resource "aws_eip" "nat_eip" {
+  count      = 2
   domain     = "vpc"
   depends_on = [aws_internet_gateway.igw]
 
   tags = merge(
     var.tags,
     {
-      Name = "${var.project_name}-${var.environment}-nat-eip"
+      Name = "${var.project_name}-${var.environment}-nat-eip-${count.index + 1}"
     }
   )
 }
 
-# NAT Gateway (in first public subnet)
+# NAT Gateways (one per public subnet for high availability)
 resource "aws_nat_gateway" "nat" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = aws_subnet.public[0].id
+  count         = 2
+  allocation_id = aws_eip.nat_eip[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
 
   tags = merge(
     var.tags,
     {
-      Name = "${var.project_name}-${var.environment}-nat-gateway"
+      Name = "${var.project_name}-${var.environment}-nat-gateway-${count.index + 1}"
     }
   )
 
@@ -138,19 +140,20 @@ resource "aws_route_table" "public" {
   )
 }
 
-# Private Route Table (for App subnets)
+# Private Route Tables (for App subnets - one per AZ)
 resource "aws_route_table" "private_app" {
+  count  = 2
   vpc_id = aws_vpc.main.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat.id
+    nat_gateway_id = aws_nat_gateway.nat[count.index].id
   }
 
   tags = merge(
     var.tags,
     {
-      Name = "${var.project_name}-${var.environment}-private-app-rt"
+      Name = "${var.project_name}-${var.environment}-private-app-rt-${count.index + 1}"
     }
   )
 }
@@ -161,7 +164,7 @@ resource "aws_route_table" "private_db" {
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat.id
+    nat_gateway_id = aws_nat_gateway.nat[0].id
   }
 
   tags = merge(
@@ -183,7 +186,7 @@ resource "aws_route_table_association" "public" {
 resource "aws_route_table_association" "private_app" {
   count          = 2
   subnet_id      = aws_subnet.private_app[count.index].id
-  route_table_id = aws_route_table.private_app.id
+  route_table_id = aws_route_table.private_app[count.index].id
 }
 
 # Route Table Associations - Private DB Subnets

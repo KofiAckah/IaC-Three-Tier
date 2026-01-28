@@ -1,11 +1,11 @@
-# ==================== Application Load Balancer Module ====================
+# Application Load Balancer Module
 # This module creates:
 # - Application Load Balancer (ALB)
 # - HTTP Listener (Port 80)
 # - Target Group for EC2 instances
 # - Health checks configured for Todo App
 
-# ==================== Application Load Balancer ====================
+# Application Load Balancer
 resource "aws_lb" "app_alb" {
   name               = "${var.project_name}-${var.environment}-alb"
   internal           = false
@@ -25,7 +25,7 @@ resource "aws_lb" "app_alb" {
   )
 }
 
-# ==================== Target Group ====================
+# Target Group for EC2 instances
 resource "aws_lb_target_group" "app_tg" {
   name     = "${var.project_name}-${var.environment}-tg"
   port     = var.target_port
@@ -66,7 +66,7 @@ resource "aws_lb_target_group" "app_tg" {
   }
 }
 
-# ==================== HTTP Listener ====================
+# HTTP Listener
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.app_alb.arn
   port              = "80"
@@ -85,7 +85,7 @@ resource "aws_lb_listener" "http" {
   )
 }
 
-# ==================== HTTPS Listener (Optional - for future SSL) ====================
+# HTTPS Listener (Optional - for future SSL)
 # Uncomment when you have an SSL certificate
 # resource "aws_lb_listener" "https" {
 #   load_balancer_arn = aws_lb.app_alb.arn
@@ -100,7 +100,7 @@ resource "aws_lb_listener" "http" {
 #   }
 # }
 
-# ==================== HTTP to HTTPS Redirect (Optional) ====================
+#  HTTP to HTTPS Redirect (Optional) 
 # Uncomment when you enable HTTPS
 # resource "aws_lb_listener" "redirect_http_to_https" {
 #   load_balancer_arn = aws_lb.app_alb.arn

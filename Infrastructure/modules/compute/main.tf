@@ -15,7 +15,7 @@ locals {
   })
 }
 
-# ==================== Launch Template ====================
+# Launch Template 
 resource "aws_launch_template" "app" {
   name_prefix   = "${var.project_name}-${var.environment}-lt-"
   image_id      = data.aws_ami.ubuntu.id
@@ -94,7 +94,7 @@ resource "aws_launch_template" "app" {
   }
 }
 
-# ==================== Auto Scaling Group ====================
+# Auto Scaling Group 
 resource "aws_autoscaling_group" "app" {
   name                = "${var.project_name}-${var.environment}-asg"
   vpc_zone_identifier = var.private_app_subnet_ids

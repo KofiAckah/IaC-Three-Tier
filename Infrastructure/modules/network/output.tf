@@ -34,8 +34,8 @@ output "public_route_table_id" {
 }
 
 output "private_app_route_table_id" {
-  description = "ID of the private app route table"
-  value       = aws_route_table.private_app.id
+  description = "IDs of the private app route tables"
+  value       = aws_route_table.private_app[*].id
 }
 
 output "private_db_route_table_id" {
@@ -50,8 +50,13 @@ output "internet_gateway_id" {
 }
 
 output "nat_gateway_id" {
-  description = "ID of the NAT Gateway"
-  value       = aws_nat_gateway.nat.id
+  description = "IDs of the NAT Gateways"
+  value       = aws_nat_gateway.nat[*].id
+}
+
+output "nat_gateway_ips" {
+  description = "Elastic IPs of the NAT Gateways"
+  value       = aws_eip.nat_eip[*].public_ip
 }
 
 # Availability Zones

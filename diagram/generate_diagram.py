@@ -4,11 +4,11 @@ AWS 3-Tier Architecture Diagram Generator
 Generates visual diagram based on Infrastructure as Code setup
 
 Architecture:
-- Network Layer: VPC, Subnets, IGW, NAT Gateway
-- Security Layer: Security Groups
+- Network Layer: VPC, Subnets, IGW, Multi-AZ NAT Gateways
+- Security Layer: Security Groups with ICMP rules
 - Presentation Layer: Application Load Balancer
 - Application Layer: Auto Scaling Group with EC2 instances (Docker Todo App)
-- Data Layer: RDS MySQL Database
+- Data Layer: RDS MySQL Multi-AZ Database
 """
 
 from diagrams import Diagram, Cluster, Edge
@@ -59,7 +59,7 @@ with Diagram(
             
             with Cluster("Availability Zone 1a"):
                 with Cluster("Public Subnet 1"):
-                    nat_gw = NATGateway("NAT Gateway")
+                    nat_gw_1a = NATGateway("NAT Gateway 1")
                     alb_1a = ELB("Application\nLoad Balancer")
                 
                 with Cluster("Private App Subnet 1"):
@@ -71,6 +71,7 @@ with Diagram(
             
             with Cluster("Availability Zone 1b"):
                 with Cluster("Public Subnet 2"):
+                    nat_gw_1b = NATGateway("NAT Gateway 2")
                     alb_1b = ELB("Application\nLoad Balancer")
                 
                 with Cluster("Private App Subnet 2"):
@@ -82,9 +83,9 @@ with Diagram(
             
             # Security Groups
             with Cluster("Security Groups"):
-                web_sg = Firewall("Web SG\n(Port 80/443)")
-                app_sg = Firewall("App SG\n(Port 80)")
-                db_sg = Firewall("DB SG\n(Port 3306)")
+                web_sg = Firewall("Web SG\n(HTTP/HTTPS/ICMP)")
+                app_sg = Firewall("App SG\n(HTTP/SSH/ICMP)")
+                db_sg = Firewall("DB SG\n(MySQL 3306)")
 
     # Traffic Flow - Internet to ALB
     users >> Edge(label="HTTPS/HTTP", color="darkgreen") >> igw
@@ -103,10 +104,11 @@ with Diagram(
     ec2_1a >> Edge(color="orange", style="dashed") >> rds_1b
     ec2_1b >> Edge(color="orange", style="dashed") >> rds_1a
 
-    # Outbound traffic through NAT
-    ec2_1a >> Edge(label="Docker Hub", color="gray", style="dotted") >> nat_gw
-    ec2_1b >> Edge(color="gray", style="dotted") >> nat_gw
-    nat_gw >> Edge(color="gray", style="dotted") >> igw
+    # Outbound traffic through NAT (Multi-AZ)
+    ec2_1a >> Edge(label="Docker Hub", color="gray", style="dotted") >> nat_gw_1a
+    ec2_1b >> Edge(label="Docker Hub", color="gray", style="dotted") >> nat_gw_1b
+    nat_gw_1a >> Edge(color="gray", style="dotted") >> igw
+    nat_gw_1b >> Edge(color="gray", style="dotted") >> igw
 
     # Security Group associations
     alb_1a - Edge(color="red", style="dotted") - web_sg

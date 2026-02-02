@@ -1,6 +1,6 @@
-# 🚀 AWS 3-Tier Architecture with Terraform
+# AWS 3-Tier Architecture with Terraform
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
@@ -18,19 +18,19 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This project implements a **production-ready 3-tier web application** infrastructure on AWS using **Terraform Infrastructure as Code (IaC)**. The architecture follows AWS best practices for high availability, security, and scalability.
 
 ### **Key Features:**
 
-✅ **Multi-AZ High Availability** - Deployed across 2 Availability Zones  
-✅ **Auto Scaling** - Automatically scales based on demand  
-✅ **Load Balancing** - Application Load Balancer distributes traffic  
-✅ **Database Redundancy** - RDS Multi-AZ for automatic failover  
-✅ **Secure Networking** - Private subnets with NAT Gateways  
-✅ **Docker Containerization** - Application deployed as Docker container  
-✅ **Infrastructure as Code** - Fully automated with Terraform modules  
+**Multi-AZ High Availability** - Deployed across 2 Availability Zones  
+**Auto Scaling** - Automatically scales based on demand  
+**Load Balancing** - Application Load Balancer distributes traffic  
+**Database Redundancy** - RDS Multi-AZ for automatic failover  
+**Secure Networking** - Private subnets with NAT Gateways  
+**Docker Containerization** - Application deployed as Docker container  
+**Infrastructure as Code** - Fully automated with Terraform modules  
 
 ### **Application:**
 
@@ -42,7 +42,7 @@ A **Todo List Web Application** built with:
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### **3-Tier Architecture Design:**
 
@@ -65,11 +65,11 @@ A **Todo List Web Application** built with:
 
 ### **High Availability Features:**
 
-- ✅ **2 Availability Zones** (eu-central-1a, eu-central-1b)
-- ✅ **2 NAT Gateways** (one per AZ for redundancy)
-- ✅ **Auto Scaling Group** (min: 1, desired: 2, max: 4)
-- ✅ **RDS Multi-AZ** (automatic failover to standby)
-- ✅ **Cross-Zone Load Balancing** enabled
+- **2 Availability Zones** (eu-central-1a, eu-central-1b)
+- **2 NAT Gateways** (one per AZ for redundancy)
+- **Auto Scaling Group** (min: 1, desired: 2, max: 4)
+- **RDS Multi-AZ** (automatic failover to standby)
+- **Cross-Zone Load Balancing** enabled
 
 ### **Architecture Diagram:**
 
@@ -77,7 +77,7 @@ A **Todo List Web Application** built with:
 
 ---
 
-## 🧩 Infrastructure Components
+## Infrastructure Components
 
 ### **Network Layer:**
 
@@ -122,7 +122,7 @@ A **Todo List Web Application** built with:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 IaC-Tier/
@@ -185,7 +185,7 @@ IaC-Tier/
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### **Required Tools:**
 
@@ -220,7 +220,7 @@ aws configure
 
 ---
 
-## 🚀 Deployment Guide
+## Deployment Guide
 
 ### **Step 1: Clone Repository**
 
@@ -300,17 +300,17 @@ terraform output alb_url
 
 ### **Application Features:**
 
-✅ Add new todo items  
-✅ Mark tasks as complete  
-✅ Delete tasks  
-✅ Real-time database updates  
-✅ Responsive Bootstrap UI  
+Add new todo items  
+Mark tasks as complete  
+Delete tasks  
+Real-time database updates  
+Responsive Bootstrap UI  
 
 ![Todo App Alternative View](assets/WebApp1.png)
 
 ---
 
-## 🖼️ Infrastructure Screenshots
+## Infrastructure Screenshots
 
 ### **VPC and Networking**
 
@@ -332,7 +332,7 @@ All infrastructure endpoints and identifiers.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### **Environment Variables**
 
@@ -377,40 +377,40 @@ curl http://<alb-url>/api/health
 
 ---
 
-## 🔒 Security
+## Security
 
 ### **Network Security:**
 
-- ✅ Private subnets for application and database tiers
-- ✅ No direct internet access to application servers
-- ✅ NAT Gateways for controlled outbound access
-- ✅ Security groups with least privilege principle
+- Private subnets for application and database tiers
+- No direct internet access to application servers
+- NAT Gateways for controlled outbound access
+- Security groups with least privilege principle
 
 ### **Data Security:**
 
-- ✅ RDS encryption at rest (AWS KMS)
-- ✅ EBS volume encryption for EC2 instances
-- ✅ Database credentials via environment variables (Terraform)
-- ✅ Automated database backups
+- RDS encryption at rest (AWS KMS)
+- EBS volume encryption for EC2 instances
+- Database credentials via environment variables (Terraform)
+- Automated database backups
 
 ### **Access Control:**
 
-- ✅ IMDSv2 enforced on EC2 instances
-- ✅ No SSH keys required (Systems Manager Session Manager recommended)
-- ✅ Security group rules restrict traffic flow
-- ✅ VPC flow logs enabled (optional)
+- IMDSv2 enforced on EC2 instances
+- No SSH keys required (Systems Manager Session Manager recommended)
+- Security group rules restrict traffic flow
+- VPC flow logs enabled (optional)
 
 ### **Best Practices Implemented:**
 
-- ✅ Principle of least privilege
-- ✅ Defense in depth (multiple security layers)
-- ✅ Encryption in transit and at rest
-- ✅ Regular security updates (Ubuntu 22.04 LTS)
-- ✅ Automated backups and snapshots
+- Principle of least privilege
+- Defense in depth (multiple security layers)
+- Encryption in transit and at rest
+- Regular security updates (Ubuntu 22.04 LTS)
+- Automated backups and snapshots
 
 ---
 
-## 💰 Cost Estimation
+## Cost Estimation
 
 ### **Monthly Cost Breakdown (eu-central-1):**
 
@@ -426,15 +426,15 @@ curl http://<alb-url>/api/health
 
 ### **Cost Optimization Tips:**
 
-- 💡 Use 1 NAT Gateway instead of 2 (saves ~$33/month, reduces HA)
-- 💡 Use t3.micro Reserved Instances (save up to 72%)
-- 💡 Enable Auto Scaling to scale down during low traffic
-- 💡 Use RDS Reserved Instances for production
-- 💡 Implement CloudWatch alarms to detect idle resources
+- Use 1 NAT Gateway instead of 2 (saves ~$33/month, reduces HA)
+- Use t3.micro Reserved Instances (save up to 72%)
+- Enable Auto Scaling to scale down during low traffic
+- Use RDS Reserved Instances for production
+- Implement CloudWatch alarms to detect idle resources
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### **Issue: Application Not Accessible**
 
@@ -497,7 +497,7 @@ terraform force-unlock <lock-id>
 
 ---
 
-## 🧹 Cleanup
+## Cleanup
 
 ### **Destroy Infrastructure:**
 
@@ -511,7 +511,7 @@ terraform plan -destroy -var-file="dev.tfvars"
 terraform destroy -var-file="dev.tfvars"
 ```
 
-**⚠️ Warning:** This will permanently delete:
+**Warning:** This will permanently delete:
 - All EC2 instances
 - RDS database (including all data)
 - Load balancers
@@ -533,7 +533,7 @@ aws ec2 describe-security-groups --query 'SecurityGroups[?VpcId==`<vpc-id>`]'
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### **Additional Resources:**
 
@@ -550,20 +550,20 @@ aws ec2 describe-security-groups --query 'SecurityGroups[?VpcId==`<vpc-id>`]'
 
 ---
 
-## 🚀 Future Enhancements
+## Future Enhancements
 
 ### **Potential Improvements:**
 
-- ❗ Using ECR instead of Docker Hub
-- 🔄 Add CI/CD pipeline (GitHub Actions, GitLab CI)
-- 📊 Implement CloudWatch monitoring and alerts
-- 🔐 Add AWS Secrets Manager for credentials
-- 🌐 Add Route 53 for custom domain
-- 📜 Implement CloudTrail for audit logging
-- 🔄 Add ElastiCache for Redis caching
-- 📦 Implement S3 for static asset storage
-- 🔒 Add WAF for web application firewall
-- 🌍 Multi-region deployment
-- 📈 Enhanced monitoring with Grafana
+- Using ECR instead of Docker Hub
+- Add CI/CD pipeline (GitHub Actions, GitLab CI)
+- Implement CloudWatch monitoring and alerts
+- Add AWS Secrets Manager for credentials
+- Add Route 53 for custom domain
+- Implement CloudTrail for audit logging
+- Add ElastiCache for Redis caching
+- Implement S3 for static asset storage
+- Add WAF for web application firewall
+- Multi-region deployment
+- Enhanced monitoring with Grafana
 
 ---
